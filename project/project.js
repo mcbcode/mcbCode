@@ -4146,3 +4146,38 @@ async function refreshProjectFiles() {
     renderFileList();
   } catch {}
 }
+
+// ===== intentional-ui-ux pass: keyboard + escape support =====
+
+// tabs reachable by keyboard
+document.querySelectorAll(".proj-tabs .tab").forEach(t => {
+  t.setAttribute("role", "tab");
+  t.tabIndex = 0;
+  t.addEventListener("keydown", e => {
+    if (e.key === "Enter" || e.key === " ") { e.preventDefault(); t.click(); }
+  });
+});
+
+// file rows reachable by keyboard (wraps the existing renderFileList)
+const _origRenderFileListA11y = renderFileList;
+renderFileList = function () {
+  _origRenderFileListA11y();
+  document.querySelectorAll("#file-list .file-row").forEach(r => {
+    r.tabIndex = 0;
+    r.setAttribute("role", "button");
+  });
+};
+document.getElementById("file-list").addEventListener("keydown", e => {
+  const row = e.target;
+  if (!row.classList || !row.classList.contains("file-row")) return; // ignore keys on the ren/del buttons
+  if (e.key === "Enter" || e.key === " ") { e.preventDefault(); row.click(); }
+});
+
+// escape closes whatever is open on top
+document.addEventListener("keydown", e => {
+  if (e.key !== "Escape") return;
+  const modal = document.querySelector(".overlay.open");
+  if (modal) { closeModal(modal.id); return; }
+  if (document.getElementById("creator-overlay").classList.contains("open")) { closeCreator(); return; }
+  if (document.getElementById("inline-editor-overlay").classList.contains("open")) closeInlineEditor();
+});
