@@ -1,6 +1,8 @@
-# ✨ mcbCode [✨](https://loaf.mcbcode.com/new)
+# ✨ mcbCode [✨](https://loaf.mcbcode.com/new) 
 
 <img src="https://mcbcode.com/img/readme_banner.png">
+
+[![mozern trust badge](https://mozern-auth.mcbcode.com/widget/mcbcode.svg?theme=dark)](https://mozern.mcbcode.com/mcbcode)
 
 **mcbCode** is a development platform for creating Minecraft: Bedrock Edition content.
 
